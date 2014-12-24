@@ -1,0 +1,108 @@
+ros-indigo-class-loader (0.3.1-0saucy) saucy; urgency=high
+
+  * Depend on boost
+  * Use FindPoco.cmake from ros/cmake_modules
+  * Honor BUILD_SHARED_LIBS and do not force building shared libraries.
+  * Contributors: Esteve Fernandez, Gary Servin, Scott K Logan
+
+ -- Esteve Fernandez <esteve@osrfoundation.org>  Tue, 23 Dec 2014 08:00:00 -0000
+
+ros-indigo-class-loader (0.3.0-0saucy) saucy; urgency=high
+
+  * Use system-provided console-bridge
+  * Contributors: Esteve Fernandez
+
+ -- Esteve Fernandez <esteve@osrfoundation.org>  Wed, 25 Jun 2014 07:00:00 -0000
+
+ros-indigo-class-loader (0.2.5-0saucy) saucy; urgency=high
+
+  * Changed format of debug messages so that rosconsole_bridge can correctly parse the prefix
+  * Improved debug output
+
+ -- Esteve Fernandez <esteve@osrfoundation.org>  Tue, 04 Mar 2014 08:00:00 -0000
+
+ros-indigo-class-loader (0.2.4-0saucy) saucy; urgency=high
+
+  * fix race condition with multi threaded library loading (#16 <https://github.com/ros/class_loader/issues/16>)
+
+ -- Mirza Shah <mshah@willowgarage.com>  Wed, 12 Feb 2014 08:00:00 -0000
+
+ros-indigo-class-loader (0.2.3-0saucy) saucy; urgency=high
+
+  * fix missing class name in logWarn output
+
+ -- Mirza Shah <mshah@willowgarage.com>  Wed, 21 Aug 2013 07:00:00 -0000
+
+ros-indigo-class-loader (0.2.2-0saucy) saucy; urgency=high
+
+  * check for CATKIN_ENABLE_TESTING (#10 <https://github.com/ros/class_loader/issues/10>)
+  * fix find Poco to return full lib path (#8 <https://github.com/ros/class_loader/issues/8>)
+  * add missing runtime destination for library under Windows
+  * add Boosst component system
+
+ -- Mirza Shah <mshah@willowgarage.com>  Sun, 14 Jul 2013 07:00:00 -0000
+
+ros-indigo-class-loader (0.2.1-0saucy) saucy; urgency=high
+
+  * improve check for Poco foundation and headers (#7 <https://github.com/ros/class_loader/issues/7>)
+
+ -- Mirza Shah <mshah@willowgarage.com>  Thu, 06 Jun 2013 07:00:00 -0000
+
+ros-indigo-class-loader (0.2.0-0saucy) saucy; urgency=high
+
+  * use find_package for Poco/dl instead to make it work on other platforms
+  * update Poco cmake file to include libdl on non-windows systems
+  * No longer CATKIN_DEPEND on console_bridge
+
+ -- Mirza Shah <mshah@willowgarage.com>  Wed, 13 Mar 2013 07:00:00 -0000
+
+ros-indigo-class-loader (0.1.27-0saucy) saucy; urgency=high
+
+  * change warning message for managed/unmanaged instance mixture in lazy loading mode
+
+ -- Mirza Shah <mshah@willowgarage.com>  Fri, 25 Jan 2013 08:00:00 -0000
+
+ros-indigo-class-loader (0.1.26-0saucy) saucy; urgency=high
+
+  * fix all instances marked as unmanaged
+
+ -- Mirza Shah <mshah@willowgarage.com>  Thu, 17 Jan 2013 08:00:00 -0000
+
+ros-indigo-class-loader (0.1.25-0saucy) saucy; urgency=high
+
+  * fix redundant destructor definition being pulled into plugin library for metaobjects instead of being contained with libclass_loader.so
+
+ -- Mirza Shah <mshah@willowgarage.com>  Wed, 16 Jan 2013 08:00:00 -0000
+
+ros-indigo-class-loader (0.1.24-0saucy) saucy; urgency=high
+
+  * fix syntax error for logInform
+
+ -- Mirza Shah <mshah@willowgarage.com>  Mon, 14 Jan 2013 23:27:00 -0000
+
+ros-indigo-class-loader (0.1.23-0saucy) saucy; urgency=high
+
+  * downgrade some warning messages to be info/debug
+
+ -- Mirza Shah <mshah@willowgarage.com>  Mon, 14 Jan 2013 23:23:00 -0000
+
+ros-indigo-class-loader (0.1.22-0saucy) saucy; urgency=high
+
+  * add safety checks for mixing of managed/unmanaged mixing as well as pointer equivalency check between graveyard and newly created metaobjects
+
+ -- Mirza Shah <mshah@willowgarage.com>  Mon, 14 Jan 2013 23:01:00 -0000
+
+ros-indigo-class-loader (0.1.21-0saucy) saucy; urgency=high
+
+  * fix compile issue on OSX in dependent packages (#3 <https://github.com/ros/class_loader/issues/3>)
+  * add more debug information
+
+ -- Mirza Shah <mshah@willowgarage.com>  Sun, 13 Jan 2013 08:00:00 -0000
+
+ros-indigo-class-loader (0.1.20-0saucy) saucy; urgency=high
+
+  * first public release for Groovy
+
+ -- Mirza Shah <mshah@willowgarage.com>  Sat, 22 Dec 2012 00:04:00 -0000
+
+
