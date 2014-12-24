@@ -1,16 +1,14 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(class_loader)
 
-set(Poco_DIR cmake)
-
-find_package(Poco REQUIRED COMPONENTS Foundation)
 find_package(Boost REQUIRED COMPONENTS thread system)
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED cmake_modules)
 find_package(console_bridge REQUIRED)
+find_package(Poco REQUIRED COMPONENTS Foundation)
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES ${PROJECT_NAME}
+  LIBRARIES ${PROJECT_NAME} ${Poco_LIBRARIES}
   DEPENDS Boost Poco console_bridge
   CFG_EXTRAS class_loader-extras.cmake
 )
@@ -23,7 +21,7 @@ set(${PROJECT_NAME}_SRCS
   src/meta_object.cpp
   src/multi_library_class_loader.cpp
 )
-add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SRCS})
+add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SRCS})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${console_bridge_LIBRARIES} ${Poco_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}
