@@ -1,3 +1,24 @@
+## class_loader (jade) - 0.3.2-0
+
+The packages in the `class_loader` repository were released into the `jade` distro by running `/usr/bin/bloom-release class_loader --track jade --rosdistro jade` on `Wed, 22 Apr 2015 18:25:13 -0000`
+
+The `class_loader` package was released.
+
+Version of package(s) in repository `class_loader`:
+- upstream repository: https://github.com/ros/class_loader
+- release repository: https://github.com/ros-gbp/class_loader-release.git
+- rosdistro version: `0.3.1-0`
+- old version: `0.3.1-0`
+- new version: `0.3.2-0`
+
+Versions of tools used:
+- bloom version: `0.5.19`
+- catkin_pkg version: `0.2.8`
+- rosdep version: `0.11.2`
+- rosdistro version: `0.4.2`
+- vcstools version: `0.1.36`
+
+
 ## class_loader (jade) - 0.3.1-0
 
 The packages in the `class_loader` repository were released into the `jade` distro by running `/usr/bin/bloom-release class_loader --track jade --rosdistro jade --new-track` on `Wed, 31 Dec 2014 20:28:41 -0000`
