@@ -1,3 +1,26 @@
+## class_loader (kinetic) - 0.3.2-0
+
+The packages in the `class_loader` repository were released into the `kinetic` distro by running `/usr/bin/bloom-release class_loader --track kinetic --rosdistro kinetic --new-track` on `Thu, 10 Mar 2016 00:52:23 -0000`
+
+The `class_loader` package was released.
+
+Version of package(s) in repository `class_loader`:
+
+- upstream repository: https://github.com/ros/class_loader
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `0.3.2-0`
+
+Versions of tools used:
+
+- bloom version: `0.5.21`
+- catkin_pkg version: `0.2.10`
+- rosdep version: `0.11.4`
+- rosdistro version: `0.4.4`
+- vcstools version: `0.1.38`
+
+
 ## class_loader (jade) - 0.3.2-0
 
 The packages in the `class_loader` repository were released into the `jade` distro by running `/usr/bin/bloom-release class_loader --track jade --rosdistro jade` on `Wed, 22 Apr 2015 18:25:13 -0000`
