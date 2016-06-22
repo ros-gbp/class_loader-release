@@ -1,3 +1,26 @@
+## class_loader (indigo) - 0.3.4-0
+
+The packages in the `class_loader` repository were released into the `indigo` distro by running `/usr/bin/bloom-release class_loader --rosdistro indigo --track indigo` on `Wed, 22 Jun 2016 15:57:56 -0000`
+
+The `class_loader` package was released.
+
+Version of package(s) in repository `class_loader`:
+
+- upstream repository: https://github.com/ros/class_loader
+- release repository: https://github.com/ros-gbp/class_loader-release.git
+- rosdistro version: `0.3.3-1`
+- old version: `0.3.3-1`
+- new version: `0.3.4-0`
+
+Versions of tools used:
+
+- bloom version: `0.5.21`
+- catkin_pkg version: `0.2.10`
+- rosdep version: `0.11.5`
+- rosdistro version: `0.4.7`
+- vcstools version: `0.1.38`
+
+
 ## class_loader (kinetic) - 0.3.3-0
 
 The packages in the `class_loader` repository were released into the `kinetic` distro by running `/usr/bin/bloom-release class_loader --track kinetic --ros-distro kinetic` on `Thu, 10 Mar 2016 22:40:17 -0000`
