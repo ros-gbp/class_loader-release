@@ -35,21 +35,21 @@ namespace class_loader
 namespace class_loader_private
 {
 
-AbstractMetaObjectBase::AbstractMetaObjectBase(const std::string& class_name, const std::string& base_class_name) :  
+AbstractMetaObjectBase::AbstractMetaObjectBase(const std::string& class_name, const std::string& base_class_name) :
 associated_library_path_("Unknown"),
 base_class_name_(base_class_name),
 class_name_(class_name),
 typeid_base_class_name_("UNSET")
 /*****************************************************************************/
 {
-    logDebug("class_loader.class_loader_private.AbstractMetaObjectBase: Creating MetaObject %p (base = %s, derived = %s, library path = %s)", this, baseClassName().c_str(), className().c_str(), getAssociatedLibraryPath().c_str());
+    CONSOLE_BRIDGE_logDebug("class_loader.class_loader_private.AbstractMetaObjectBase: Creating MetaObject %p (base = %s, derived = %s, library path = %s)", this, baseClassName().c_str(), className().c_str(), getAssociatedLibraryPath().c_str());
 }
 
 AbstractMetaObjectBase::~AbstractMetaObjectBase()
 /*****************************************************************************/
 {
-    logDebug("class_loader.class_loader_private.AbstractMetaObjectBase: Destroying MetaObject %p (base = %s, derived = %s, library path = %s)", this, baseClassName().c_str(), className().c_str(), getAssociatedLibraryPath().c_str());
-} 
+    CONSOLE_BRIDGE_logDebug("class_loader.class_loader_private.AbstractMetaObjectBase: Destroying MetaObject %p (base = %s, derived = %s, library path = %s)", this, baseClassName().c_str(), className().c_str(), getAssociatedLibraryPath().c_str());
+}
 
 std::string AbstractMetaObjectBase::className() const
 /*****************************************************************************/
@@ -63,7 +63,7 @@ std::string AbstractMetaObjectBase::baseClassName() const
   return base_class_name_;
 }
 
-std::string AbstractMetaObjectBase::typeidBaseClassName() const 
+std::string AbstractMetaObjectBase::typeidBaseClassName() const
 /*****************************************************************************/
 {
   return typeid_base_class_name_;
