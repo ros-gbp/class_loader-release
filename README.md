@@ -1,3 +1,26 @@
+## class_loader (lunar) - 0.3.7-0
+
+The packages in the `class_loader` repository were released into the `lunar` distro by running `/usr/bin/bloom-release class_loader -r lunar -t lunar` on `Thu, 27 Jul 2017 17:12:37 -0000`
+
+The `class_loader` package was released.
+
+Version of package(s) in repository `class_loader`:
+
+- upstream repository: https://github.com/ros/class_loader
+- release repository: https://github.com/ros-gbp/class_loader-release.git
+- rosdistro version: `0.3.6-0`
+- old version: `0.3.6-0`
+- new version: `0.3.7-0`
+
+Versions of tools used:
+
+- bloom version: `0.5.26`
+- catkin_pkg version: `0.3.5`
+- rosdep version: `0.11.5`
+- rosdistro version: `0.6.2`
+- vcstools version: `0.1.39`
+
+
 ## class_loader (lunar) - 0.3.6-0
 
 The packages in the `class_loader` repository were released into the `lunar` distro by running `/usr/bin/bloom-release class_loader --track lunar --rosdistro lunar --new-track` on `Thu, 23 Feb 2017 01:07:37 -0000`
