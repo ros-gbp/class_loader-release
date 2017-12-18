@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Willow Garage, Inc.
+ * Copyright (c) 2017, Open Source Robotics Foundation, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,13 +27,29 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BASE_H_
-#define BASE_H_
+#ifndef CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_H_
+#define CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_H_
 
-class Base
-{
-public:
-  virtual void saySomething() = 0;
-};
+#include <console_bridge/console.h>
 
-#endif  // BASE_H_
+#ifndef CONSOLE_BRIDGE_logError
+# define CONSOLE_BRIDGE_logError(fmt, ...)  \
+  console_bridge::log(__FILE__, __LINE__, console_bridge::CONSOLE_BRIDGE_LOG_ERROR, fmt, ##__VA_ARGS__)
+#endif
+
+#ifndef CONSOLE_BRIDGE_logWarn
+# define CONSOLE_BRIDGE_logWarn(fmt, ...)   \
+  console_bridge::log(__FILE__, __LINE__, console_bridge::CONSOLE_BRIDGE_LOG_WARN,  fmt, ##__VA_ARGS__)
+#endif
+
+#ifndef CONSOLE_BRIDGE_logInform
+# define CONSOLE_BRIDGE_logInform(fmt, ...) \
+  console_bridge::log(__FILE__, __LINE__, console_bridge::CONSOLE_BRIDGE_LOG_INFO,  fmt, ##__VA_ARGS__)
+#endif
+
+#ifndef CONSOLE_BRIDGE_logDebug
+# define CONSOLE_BRIDGE_logDebug(fmt, ...)  \
+  console_bridge::log(__FILE__, __LINE__, console_bridge::CONSOLE_BRIDGE_LOG_DEBUG, fmt, ##__VA_ARGS__)
+#endif
+
+#endif  // CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_H_
