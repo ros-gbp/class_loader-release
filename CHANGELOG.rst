@@ -2,6 +2,20 @@
 Changelog for package class_loader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.3.8 (2017-11-16)
+------------------
+* Fix console_bridge marcos definition (`#66 <https://github.com/ros/class_loader/issues/66>`_)
+* Style overhaul (`#64 <https://github.com/ros/class_loader/issues/64>`_) (`#62 <https://github.com/ros/class_loader/issues/62>`_)
+* Add copyright notice to unique_ptr_test.cpp (`#65 <https://github.com/ros/class_loader/issues/65>`_)
+* Contributors: Maarten de Vries, Mikael Arguedas
+
+0.3.7 (2017-07-27)
+------------------
+* switch to package format 2 (`#56 <https://github.com/ros/class_loader/issues/56>`_)
+* remove trailing whitespaces (`#55 <https://github.com/ros/class_loader/issues/55>`_)
+* use CONSOLE_BRIDGE_X logging macros (`#52 <https://github.com/ros/class_loader/issues/52>`_)
+* Contributors: Mikael Arguedas, jmachowinski
+
 0.3.6 (2016-10-24)
 ------------------
 * Made changes to two locking mechanisms inside class loader core's loadLibrary() function: 1) I added a lock to the 'addClassLoaderOwnerFor...' function to protect it against a race condition with the unloadLibrary() function. 2) I also raised the loader lock to cover the whole function. Previously the check to see if a library is already loaded and the actual loading of the library was not atomic. Multiple threads could create shared library objects, for example.
