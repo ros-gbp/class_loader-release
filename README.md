@@ -1,3 +1,26 @@
+## class_loader (melodic) - 0.4.0-0
+
+The packages in the `class_loader` repository were released into the `melodic` distro by running `/usr/bin/bloom-release class_loader -r melodic -t melodic --new-track` on `Thu, 15 Feb 2018 23:59:45 -0000`
+
+The `class_loader` package was released.
+
+Version of package(s) in repository `class_loader`:
+
+- upstream repository: https://github.com/ros/class_loader
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `0.4.0-0`
+
+Versions of tools used:
+
+- bloom version: `0.6.2`
+- catkin_pkg version: `0.4.1`
+- rosdep version: `0.12.1`
+- rosdistro version: `0.6.6`
+- vcstools version: `0.1.40`
+
+
 ## class_loader (indigo) - 0.3.8-0
 
 The packages in the `class_loader` repository were released into the `indigo` distro by running `/usr/bin/bloom-release class_loader -r indigo -t indigo` on `Mon, 18 Dec 2017 12:42:19 -0000`
