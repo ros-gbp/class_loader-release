@@ -29,9 +29,9 @@
 
 #include <iostream>
 
-#include "class_loader/class_loader.h"
+#include "class_loader/class_loader.hpp"
 
-#include "./base.h"
+#include "./base.hpp"
 
 class Dog : public Base
 {
@@ -63,8 +63,8 @@ public:
   virtual void saySomething() {std::cout << "Baaah" << std::endl;}
 };
 
-CLASS_LOADER_REGISTER_CLASS(Dog, Base);
-CLASS_LOADER_REGISTER_CLASS(Cat, Base);
-CLASS_LOADER_REGISTER_CLASS(Duck, Base);
-CLASS_LOADER_REGISTER_CLASS(Cow, Base);
-CLASS_LOADER_REGISTER_CLASS(Sheep, Base);
+CLASS_LOADER_REGISTER_CLASS(Dog, Base)
+CLASS_LOADER_REGISTER_CLASS(Cat, Base)
+CLASS_LOADER_REGISTER_CLASS(Duck, Base)
+CLASS_LOADER_REGISTER_CLASS(Cow, Base)
+CLASS_LOADER_REGISTER_CLASS(Sheep, Base)

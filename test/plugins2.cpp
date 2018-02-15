@@ -29,9 +29,9 @@
 
 #include <iostream>
 
-#include "class_loader/class_loader.h"
+#include "class_loader/class_loader.hpp"
 
-#include "./base.h"
+#include "./base.hpp"
 
 class Robot : public Base
 {
@@ -58,7 +58,7 @@ public:
 };
 
 
-CLASS_LOADER_REGISTER_CLASS(Robot, Base);
-CLASS_LOADER_REGISTER_CLASS(Alien, Base);
-CLASS_LOADER_REGISTER_CLASS(Monster, Base);
-CLASS_LOADER_REGISTER_CLASS(Zombie, Base);
+CLASS_LOADER_REGISTER_CLASS(Robot, Base)
+CLASS_LOADER_REGISTER_CLASS(Alien, Base)
+CLASS_LOADER_REGISTER_CLASS(Monster, Base)
+CLASS_LOADER_REGISTER_CLASS(Zombie, Base)

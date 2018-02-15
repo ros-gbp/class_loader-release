@@ -27,7 +27,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "class_loader/class_loader.h"
+#include "class_loader/class_loader.hpp"
 
 #include <string>
 
@@ -41,9 +41,23 @@ bool ClassLoader::hasUnmanagedInstanceBeenCreated()
   return ClassLoader::has_unmananged_instance_been_created_;
 }
 
+std::string systemLibraryPrefix()
+{
+#ifndef _WIN32
+  return "lib";
+#endif
+  return "";
+}
+
 std::string systemLibrarySuffix()
 {
   return Poco::SharedLibrary::suffix();
+}
+
+
+std::string systemLibraryFormat(const std::string & library_name)
+{
+  return systemLibraryPrefix() + library_name + systemLibrarySuffix();
 }
 
 ClassLoader::ClassLoader(const std::string & library_path, bool ondemand_load_unload)
@@ -63,7 +77,7 @@ ClassLoader::ClassLoader(const std::string & library_path, bool ondemand_load_un
 
 ClassLoader::~ClassLoader()
 {
-  CONSOLE_BRIDGE_logDebug(
+  CONSOLE_BRIDGE_logDebug("%s",
     "class_loader.ClassLoader: "
     "Destroying class loader, unloading associated library...\n");
   unloadLibrary();  // TODO(mikaelarguedas): while(unloadLibrary() > 0){} ??
@@ -100,7 +114,7 @@ int ClassLoader::unloadLibraryInternal(bool lock_plugin_ref_count)
   }
 
   if (plugin_ref_count_ > 0) {
-    CONSOLE_BRIDGE_logWarn(
+    CONSOLE_BRIDGE_logWarn("%s",
       "class_loader.ClassLoader: "
       "SEVERE WARNING!!! Attempting to unload library while objects created by this loader "
       "exist in the heap! "
