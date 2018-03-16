@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Willow Garage, Inc.
+ * Copyright (c) 2017, Open Source Robotics Foundation, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -10,7 +10,7 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Willow Garage, Inc. nor the names of its
+ *     * Neither the name of the Open Source Robotics Foundation, Inc. nor the names of its
  *       contributors may be used to endorse or promote products derived from
  *       this software without specific prior written permission.
  *
@@ -27,44 +27,33 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <iostream>
+#ifndef CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_HPP_
+#define CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_HPP_
 
-#include "class_loader/class_loader.hpp"
+#include <console_bridge/console.h>
 
-#include "./base.hpp"
+#ifndef CONSOLE_BRIDGE_logError
+# define CONSOLE_BRIDGE_logError(fmt, ...)  \
+  console_bridge::log( \
+    __FILE__, __LINE__, console_bridge::CONSOLE_BRIDGE_LOG_ERROR, fmt, ##__VA_ARGS__)
+#endif
 
-class Dog : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Bark" << std::endl;}
-};
+#ifndef CONSOLE_BRIDGE_logWarn
+# define CONSOLE_BRIDGE_logWarn(fmt, ...)   \
+  console_bridge::log( \
+    __FILE__, __LINE__, console_bridge::CONSOLE_BRIDGE_LOG_WARN,  fmt, ##__VA_ARGS__)
+#endif
 
-class Cat : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Meow" << std::endl;}
-};
+#ifndef CONSOLE_BRIDGE_logInform
+# define CONSOLE_BRIDGE_logInform(fmt, ...) \
+  console_bridge::log( \
+    __FILE__, __LINE__, console_bridge::CONSOLE_BRIDGE_LOG_INFO,  fmt, ##__VA_ARGS__)
+#endif
 
-class Duck : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Quack" << std::endl;}
-};
+#ifndef CONSOLE_BRIDGE_logDebug
+# define CONSOLE_BRIDGE_logDebug(fmt, ...)  \
+  console_bridge::log( \
+    __FILE__, __LINE__, console_bridge::CONSOLE_BRIDGE_LOG_DEBUG, fmt, ##__VA_ARGS__)
+#endif
 
-class Cow : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Moooo" << std::endl;}
-};
-
-class Sheep : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Baaah" << std::endl;}
-};
-
-CLASS_LOADER_REGISTER_CLASS(Dog, Base);
-CLASS_LOADER_REGISTER_CLASS(Cat, Base);
-CLASS_LOADER_REGISTER_CLASS(Duck, Base);
-CLASS_LOADER_REGISTER_CLASS(Cow, Base);
-CLASS_LOADER_REGISTER_CLASS(Sheep, Base);
+#endif  // CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_HPP_

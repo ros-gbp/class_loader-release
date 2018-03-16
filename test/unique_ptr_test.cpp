@@ -34,7 +34,6 @@
 #include <gtest/gtest.h>
 #include <boost/thread.hpp>
 
-#include <cstddef>
 #include <functional>
 #include <iostream>
 #include <string>
@@ -42,11 +41,12 @@
 
 #include "./base.hpp"
 
-const std::string LIBRARY_1 = class_loader::systemLibraryFormat("class_loader_TestPlugins1");  // NOLINT
-const std::string LIBRARY_2 = class_loader::systemLibraryFormat("class_loader_TestPlugins2");  // NOLINT
+const char LIBRARY_1[] = "libclass_loader_TestPlugins1.so";
+const char LIBRARY_2[] = "libclass_loader_TestPlugins2.so";
 
 using class_loader::ClassLoader;
 
+/*****************************************************************************/
 TEST(ClassLoaderUniquePtrTest, basicLoad) {
   try {
     ClassLoader loader1(LIBRARY_1, false);
@@ -57,6 +57,7 @@ TEST(ClassLoaderUniquePtrTest, basicLoad) {
   }
 }
 
+/*****************************************************************************/
 TEST(ClassLoaderUniquePtrTest, correctLazyLoadUnload) {
   try {
     ASSERT_FALSE(class_loader::class_loader_private::isLibraryLoadedByAnybody(LIBRARY_1));
@@ -80,6 +81,8 @@ TEST(ClassLoaderUniquePtrTest, correctLazyLoadUnload) {
   }
 }
 
+/*****************************************************************************/
+
 TEST(ClassLoaderUniquePtrTest, nonExistentPlugin) {
   ClassLoader loader1(LIBRARY_1, false);
 
@@ -100,6 +103,8 @@ TEST(ClassLoaderUniquePtrTest, nonExistentPlugin) {
   FAIL() << "Did not throw exception as expected.\n";
 }
 
+/*****************************************************************************/
+
 void wait(int seconds)
 {
   boost::this_thread::sleep(boost::posix_time::seconds(seconds));
@@ -108,8 +113,8 @@ void wait(int seconds)
 void run(ClassLoader * loader)
 {
   std::vector<std::string> classes = loader->getAvailableClasses<Base>();
-  for (auto & class_ : classes) {
-    loader->createUniqueInstance<Base>(class_)->saySomething();
+  for (unsigned int c = 0; c < classes.size(); c++) {
+    loader->createUniqueInstance<Base>(classes.at(c))->saySomething();
   }
 }
 
@@ -123,12 +128,12 @@ TEST(ClassLoaderUniquePtrTest, threadSafety) {
   try {
     std::vector<boost::thread> client_threads;
 
-    for (size_t c = 0; c < 1000; c++) {
+    for (unsigned int c = 0; c < 1000; c++) {
       client_threads.emplace_back(std::bind(&run, &loader1));
     }
 
-    for (auto & client_thread : client_threads) {
-      client_thread.join();
+    for (unsigned int c = 0; c < client_threads.size(); c++) {
+      client_threads.at(c).join();
     }
 
     loader1.unloadLibrary();
@@ -139,6 +144,9 @@ TEST(ClassLoaderUniquePtrTest, threadSafety) {
     FAIL() << "Unknown exception.";
   }
 }
+
+
+/*****************************************************************************/
 
 TEST(ClassLoaderUniquePtrTest, loadRefCountingLazy) {
   try {
@@ -179,6 +187,9 @@ TEST(ClassLoaderUniquePtrTest, loadRefCountingLazy) {
 
   FAIL() << "Did not throw exception as expected.\n";
 }
+
+
+/*****************************************************************************/
 
 void testMultiClassLoader(bool lazy)
 {
@@ -228,6 +239,8 @@ TEST(MultiClassLoaderUniquePtrTest, noWarningOnLazyLoad) {
 
   SUCCEED();
 }
+
+/*****************************************************************************/
 
 // Run all the tests that were declared with TEST()
 int main(int argc, char ** argv)

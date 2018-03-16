@@ -32,10 +32,6 @@
 #ifndef CLASS_LOADER__CLASS_LOADER_REGISTER_MACRO_H_
 #define CLASS_LOADER__CLASS_LOADER_REGISTER_MACRO_H_
 
-// *INDENT-OFF* (prevent uncrustify from adding indention below)
-#warning Including header <class_loader/class_loader_register_macro.h> is deprecated, \
-include <class_loader/register_macro.hpp> instead.
-
 #include "./register_macro.hpp"
 
 #endif  // CLASS_LOADER__CLASS_LOADER_REGISTER_MACRO_H_

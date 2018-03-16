@@ -35,6 +35,8 @@
 #include <stdexcept>
 #include <string>
 
+// TODO(mikaelarguedas) : replace no lints with the explicit keyword in an ABI breaking release
+
 namespace class_loader
 {
 
@@ -45,7 +47,7 @@ namespace class_loader
 class ClassLoaderException : public std::runtime_error
 {
 public:
-  explicit inline ClassLoaderException(const std::string & error_desc)
+  ClassLoaderException(const std::string error_desc)    // NOLINT(runtime/explicit)
   : std::runtime_error(error_desc) {}
 };
 
@@ -56,7 +58,7 @@ public:
 class LibraryLoadException : public ClassLoaderException
 {
 public:
-  explicit inline LibraryLoadException(const std::string & error_desc)
+  LibraryLoadException(const std::string error_desc)    // NOLINT(runtime/explicit)
   : ClassLoaderException(error_desc) {}
 };
 
@@ -67,7 +69,7 @@ public:
 class LibraryUnloadException : public ClassLoaderException
 {
 public:
-  explicit inline LibraryUnloadException(const std::string & error_desc)
+  LibraryUnloadException(const std::string error_desc)    // NOLINT(runtime/explicit)
   : ClassLoaderException(error_desc) {}
 };
 
@@ -78,7 +80,7 @@ public:
 class CreateClassException : public ClassLoaderException
 {
 public:
-  explicit inline CreateClassException(const std::string & error_desc)
+  CreateClassException(const std::string error_desc)    // NOLINT(runtime/explicit)
   : ClassLoaderException(error_desc) {}
 };
 
@@ -89,7 +91,7 @@ public:
 class NoClassLoaderExistsException : public ClassLoaderException
 {
 public:
-  explicit inline NoClassLoaderExistsException(const std::string & error_desc)
+  NoClassLoaderExistsException(const std::string error_desc)    // NOLINT(runtime/explicit)
   : ClassLoaderException(error_desc) {}
 };
 

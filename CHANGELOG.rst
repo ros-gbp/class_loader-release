@@ -2,35 +2,16 @@
 Changelog for package class_loader
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.4.0 (2018-02-15)
+0.3.9 (2018-03-16)
 ------------------
-* Stop checking for c++11 support (`#87 <https://github.com/ros/class_loader/pull/87>`_)
-  all Melodic targeted platforms use gnu++14 so checking and forcing -std=c++11 doesn't make sense anymore
-* [ABI breaking] use std::string references for exceptions (`#86 <https://github.com/ros/class_loader/issues/86>`_)
-* deprecate .h headers in favor of .hpp headers (`#81 <https://github.com/ros/class_loader/pull/81>`_)
-* provide a script with exhaustive rules for header replacement
-* comply with package format2 xsd (`#83 <https://github.com/ros/class_loader/issues/83>`_)
-* [ABI breaking] Exceptions fixups (`#82 <https://github.com/ros/class_loader/issues/82>`_)
-  * inline exceptions
-  * use throw statement rather than function
-* [linter] add nolint for global std::string used for testing (`#79 <https://github.com/ros/class_loader/issues/79>`_)
-* use auto for all for loops iterating on vectors/maps (`#78 <https://github.com/ros/class_loader/issues/78>`_)
-* Add systemLibraryFormat and systemLibraryPrefix functions (`#77 <https://github.com/ros/class_loader/issues/77>`_)
-* [ABI breaking] Bring melodic-devel closer to ros2 branch (`#76 <https://github.com/ros/class_loader/issues/76>`_)
-  * comply with extra and pedantic compiler flags
-  * use c++11 nullptr instead of NULL
-  * make ABI breaking change for explicit constructors
-  * make linters happy
-  * no need to support console_bridge < 0.3.0 anymore
-  * remove obsolete todo
-  * add virtual destructor in test
-  * vector size() returns size_t
-  * simplify branching
-* [fix warnings] c++11 requires at least one argument for ... (`#71 <https://github.com/ros/class_loader/issues/71>`_)
-* [linter] Use std::string::empty instead comparing with an empty string (`#69 <https://github.com/ros/class_loader/issues/69>`_)
-* [linter] wrap console bridge invocation lines (`#68 <https://github.com/ros/class_loader/issues/68>`_)
-* OSRF and not willow in licence header (`#67 <https://github.com/ros/class_loader/issues/67>`_)
-* Contributors: David Wagner, Mikael Arguedas
+* [bugfix] define PACKAGE_X_DESTINATION to match catkin behavior (`#88 <https://github.com/ros/class_loader/issues/88>`_)
+* [migration] Provide alternative headers (`#84 <https://github.com/ros/class_loader/issues/84>`_)
+* [style] comply with package format2 xsd (`#83 <https://github.com/ros/class_loader/issues/83>`_) (`#85 <https://github.com/ros/class_loader/issues/85>`_)
+* [warnings] c++11 requires at least one argument for ... (`#71 <https://github.com/ros/class_loader/issues/71>`_)
+* [style] Use std::string::empty instead comparing with an empty string (`#69 <https://github.com/ros/class_loader/issues/69>`_)
+* [style] wrap console bridge invocation lines (`#68 <https://github.com/ros/class_loader/issues/68>`_)
+* [copyright] OSRF and not willow in licence header (`#67 <https://github.com/ros/class_loader/issues/67>`_)
+* Contributors: David Wagner, Diego Cesar, Mikael Arguedas
 
 0.3.8 (2017-11-16)
 ------------------

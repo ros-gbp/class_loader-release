@@ -29,7 +29,6 @@
 
 #include "class_loader/multi_library_class_loader.hpp"
 
-#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -49,10 +48,11 @@ MultiLibraryClassLoader::~MultiLibraryClassLoader()
 std::vector<std::string> MultiLibraryClassLoader::getRegisteredLibraries()
 {
   std::vector<std::string> libraries;
-  for (auto & it : active_class_loaders_) {
-    if (it.second != nullptr) {
-      libraries.push_back(it.first);
-    }
+  for (
+    LibraryToClassLoaderMap::iterator itr = active_class_loaders_.begin();
+    itr != active_class_loaders_.end(); itr++)
+  {
+    libraries.push_back(itr->first);
   }
   return libraries;
 }
@@ -62,21 +62,24 @@ ClassLoader * MultiLibraryClassLoader::getClassLoaderForLibrary(const std::strin
   LibraryToClassLoaderMap::iterator itr = active_class_loaders_.find(library_path);
   if (itr != active_class_loaders_.end()) {
     return itr->second;
-  } else {return nullptr;}
+  } else {return NULL;}
 }
 
 ClassLoaderVector MultiLibraryClassLoader::getAllAvailableClassLoaders()
 {
   ClassLoaderVector loaders;
-  for (auto & it : active_class_loaders_) {
-    loaders.push_back(it.second);
+  for (
+    LibraryToClassLoaderMap::iterator itr = active_class_loaders_.begin();
+    itr != active_class_loaders_.end(); itr++)
+  {
+    loaders.push_back(itr->second);
   }
   return loaders;
 }
 
 bool MultiLibraryClassLoader::isLibraryAvailable(const std::string & library_name)
 {
-  return getClassLoaderForLibrary(library_name) != nullptr;
+  return getClassLoaderForLibrary(library_name) != NULL;
 }
 
 void MultiLibraryClassLoader::loadLibrary(const std::string & library_path)
@@ -90,9 +93,8 @@ void MultiLibraryClassLoader::loadLibrary(const std::string & library_path)
 void MultiLibraryClassLoader::shutdownAllClassLoaders()
 {
   std::vector<std::string> available_libraries = getRegisteredLibraries();
-
-  for (auto & library_path : getRegisteredLibraries()) {
-    unloadLibrary(library_path);
+  for (unsigned int c = 0; c < available_libraries.size(); c++) {
+    unloadLibrary(available_libraries.at(c));
   }
 }
 

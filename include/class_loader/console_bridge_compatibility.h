@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2012, Willow Garage, Inc.
+ * Software License Agreement (BSD License)
+ *
+ * Copyright (c) 2018, Open Source Robotics Foundation, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -10,7 +12,7 @@
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Willow Garage, Inc. nor the names of its
+ *     * Neither the name of the copyright holders nor the names of its
  *       contributors may be used to endorse or promote products derived from
  *       this software without specific prior written permission.
  *
@@ -27,44 +29,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <iostream>
+#ifndef CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_H_
+#define CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_H_
 
-#include "class_loader/class_loader.hpp"
+#include "./console_bridge_compatibility.hpp"
 
-#include "./base.hpp"
-
-class Dog : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Bark" << std::endl;}
-};
-
-class Cat : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Meow" << std::endl;}
-};
-
-class Duck : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Quack" << std::endl;}
-};
-
-class Cow : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Moooo" << std::endl;}
-};
-
-class Sheep : public Base
-{
-public:
-  virtual void saySomething() {std::cout << "Baaah" << std::endl;}
-};
-
-CLASS_LOADER_REGISTER_CLASS(Dog, Base);
-CLASS_LOADER_REGISTER_CLASS(Cat, Base);
-CLASS_LOADER_REGISTER_CLASS(Duck, Base);
-CLASS_LOADER_REGISTER_CLASS(Cow, Base);
-CLASS_LOADER_REGISTER_CLASS(Sheep, Base);
+#endif  // CLASS_LOADER__CONSOLE_BRIDGE_COMPATIBILITY_H_
