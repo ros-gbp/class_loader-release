@@ -32,6 +32,10 @@
 #ifndef CLASS_LOADER__CLASS_LOADER_EXCEPTIONS_H_
 #define CLASS_LOADER__CLASS_LOADER_EXCEPTIONS_H_
 
+// *INDENT-OFF* (prevent uncrustify from adding indention below)
+#warning Including header <class_loader/class_loader_exceptions.h> is deprecated, \
+include <class_loader/exceptions.hpp> instead.
+
 #include "./exceptions.hpp"
 
 #endif  // CLASS_LOADER__CLASS_LOADER_EXCEPTIONS_H_

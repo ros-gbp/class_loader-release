@@ -33,16 +33,14 @@
 #define CLASS_LOADER__MULTI_LIBRARY_CLASS_LOADER_HPP_
 
 #include <boost/thread.hpp>
+#include <cstddef>
 #include <map>
 #include <string>
 #include <vector>
 
 #include "console_bridge/console.h"
-
 #include "class_loader/class_loader.hpp"
-#include "class_loader/console_bridge_compatibility.hpp"
-
-// TODO(mikaelarguedas) : replace no lints with the explicit keyword in an ABI breaking release
+#include "class_loader/visibility_control.hpp"
 
 namespace class_loader
 {
@@ -55,14 +53,14 @@ typedef std::vector<ClassLoader *> ClassLoaderVector;
 * @class MultiLibraryClassLoader
 * @brief A ClassLoader that can bind more than one runtime library
 */
-class MultiLibraryClassLoader
+class CLASS_LOADER_PUBLIC MultiLibraryClassLoader
 {
 public:
   /**
    * @brief Constructor for the class
    * @param enable_ondemand_loadunload - Flag indicates if classes are to be loaded/unloaded automatically as class_loader are created and destroyed
    */
-  MultiLibraryClassLoader(bool enable_ondemand_loadunload);  // NOLINT(runtime/explicit)
+  explicit MultiLibraryClassLoader(bool enable_ondemand_loadunload);
 
   /**
   * @brief Virtual destructor for class
@@ -74,7 +72,52 @@ public:
    * This version does not look in a specific library for the factory, but rather the first open library that defines the classs
    * @param Base - polymorphic type indicating base class
    * @param class_name - the name of the concrete plugin class we want to instantiate
-   * @return A boost::shared_ptr<Base> to newly created plugin
+   * @return A std::shared_ptr<Base> to newly created plugin
+   */
+  template<class Base>
+  std::shared_ptr<Base> createSharedInstance(const std::string & class_name)
+  {
+    CONSOLE_BRIDGE_logDebug(
+      "class_loader::MultiLibraryClassLoader: "
+      "Attempting to create instance of class type %s.",
+      class_name.c_str());
+    ClassLoader * loader = getClassLoaderForClass<Base>(class_name);
+    if (nullptr == loader) {
+      throw class_loader::CreateClassException(
+              "MultiLibraryClassLoader: Could not create object of class type " +
+              class_name +
+              " as no factory exists for it. Make sure that the library exists and "
+              "was explicitly loaded through MultiLibraryClassLoader::loadLibrary()");
+    }
+
+    return loader->createSharedInstance<Base>(class_name);
+  }
+
+  /**
+   * @brief Creates an instance of an object of given class name with ancestor class Base
+   * This version takes a specific library to make explicit the factory being used
+   * @param Base - polymorphic type indicating base class
+   * @param class_name - the name of the concrete plugin class we want to instantiate
+   * @param library_path - the library from which we want to create the plugin
+   * @return A std::shared_ptr<Base> to newly created plugin
+   */
+  template<class Base>
+  std::shared_ptr<Base>
+  createSharedInstance(const std::string & class_name, const std::string & library_path)
+  {
+    ClassLoader * loader = getClassLoaderForLibrary(library_path);
+    if (nullptr == loader) {
+      throw class_loader::NoClassLoaderExistsException(
+              "Could not create instance as there is no ClassLoader in "
+              "MultiLibraryClassLoader bound to library " + library_path +
+              " Ensure you called MultiLibraryClassLoader::loadLibrary()");
+    }
+    return loader->createSharedInstance<Base>(class_name);
+  }
+
+  /**
+   * @brief Creates an instance of an object of given class name with ancestor class Base
+   * Same as createSharedInstance() except it returns a boost::shared_ptr.
    */
   template<class Base>
   boost::shared_ptr<Base> createInstance(const std::string & class_name)
@@ -84,7 +127,7 @@ public:
       "Attempting to create instance of class type %s.",
       class_name.c_str());
     ClassLoader * loader = getClassLoaderForClass<Base>(class_name);
-    if (NULL == loader) {
+    if (nullptr == loader) {
       throw class_loader::CreateClassException(
               "MultiLibraryClassLoader: Could not create object of class type " +
               class_name +
@@ -97,18 +140,14 @@ public:
 
   /**
    * @brief Creates an instance of an object of given class name with ancestor class Base
-   * This version takes a specific library to make explicit the factory being used
-   * @param Base - polymorphic type indicating base class
-   * @param class_name - the name of the concrete plugin class we want to instantiate
-   * @param library_path - the library from which we want to create the plugin
-   * @return A boost::shared_ptr<Base> to newly created plugin
+   * Same as createSharedInstance() except it returns a boost::shared_ptr.
    */
   template<class Base>
   boost::shared_ptr<Base>
   createInstance(const std::string & class_name, const std::string & library_path)
   {
     ClassLoader * loader = getClassLoaderForLibrary(library_path);
-    if (NULL == loader) {
+    if (nullptr == loader) {
       throw class_loader::NoClassLoaderExistsException(
               "Could not create instance as there is no ClassLoader in "
               "MultiLibraryClassLoader bound to library " + library_path +
@@ -117,13 +156,9 @@ public:
     return loader->createInstance<Base>(class_name);
   }
 
-#if __cplusplus >= 201103L
   /**
    * @brief Creates an instance of an object of given class name with ancestor class Base
-   * This version does not look in a specific library for the factory, but rather the first open library that defines the classs
-   * @param Base - polymorphic type indicating base class
-   * @param class_name - the name of the concrete plugin class we want to instantiate
-   * @return A unique pointer to newly created plugin
+   * Same as createSharedInstance() except it returns a std::unique_ptr.
    */
   template<class Base>
   ClassLoader::UniquePtr<Base> createUniqueInstance(const std::string & class_name)
@@ -144,11 +179,7 @@ public:
 
   /**
    * @brief Creates an instance of an object of given class name with ancestor class Base
-   * This version takes a specific library to make explicit the factory being used
-   * @param Base - polymorphic type indicating base class
-   * @param class_name - the name of the concrete plugin class we want to instantiate
-   * @param library_path - the library from which we want to create the plugin
-   * @return A unique pointer to newly created plugin
+   * Same as createSharedInstance() except it returns a std::unique_ptr.
    */
   template<class Base>
   ClassLoader::UniquePtr<Base>
@@ -163,7 +194,6 @@ public:
     }
     return loader->createUniqueInstance<Base>(class_name);
   }
-#endif
 
   /**
    * @brief Creates an instance of an object of given class name with ancestor class Base
@@ -177,7 +207,7 @@ public:
   Base * createUnmanagedInstance(const std::string & class_name)
   {
     ClassLoader * loader = getClassLoaderForClass<Base>(class_name);
-    if (NULL == loader) {
+    if (nullptr == loader) {
       throw class_loader::CreateClassException(
               "MultiLibraryClassLoader: Could not create class of type " + class_name);
     }
@@ -196,7 +226,7 @@ public:
   Base * createUnmanagedInstance(const std::string & class_name, const std::string & library_path)
   {
     ClassLoader * loader = getClassLoaderForLibrary(library_path);
-    if (NULL == loader) {
+    if (nullptr == loader) {
       throw class_loader::NoClassLoaderExistsException(
               "Could not create instance as there is no ClassLoader in MultiLibraryClassLoader "
               "bound to library " + library_path +
@@ -235,10 +265,8 @@ public:
   std::vector<std::string> getAvailableClasses()
   {
     std::vector<std::string> available_classes;
-    ClassLoaderVector loaders = getAllAvailableClassLoaders();
-    for (unsigned int c = 0; c < loaders.size(); c++) {
-      ClassLoader * current = loaders.at(c);
-      std::vector<std::string> loader_classes = current->getAvailableClasses<Base>();
+    for (auto & loader : getAllAvailableClassLoaders()) {
+      std::vector<std::string> loader_classes = loader->getAvailableClasses<Base>();
       available_classes.insert(
         available_classes.end(), loader_classes.begin(), loader_classes.end());
     }
@@ -254,16 +282,13 @@ public:
   std::vector<std::string> getAvailableClassesForLibrary(const std::string & library_path)
   {
     ClassLoader * loader = getClassLoaderForLibrary(library_path);
-    std::vector<std::string> available_classes;
-    if (loader) {
-      available_classes = loader->getAvailableClasses<Base>();
-      return available_classes;
-    } else {
+    if (nullptr == loader) {
       throw class_loader::NoClassLoaderExistsException(
               "There is no ClassLoader in MultiLibraryClassLoader bound to library " +
               library_path +
               " Ensure you called MultiLibraryClassLoader::loadLibrary()");
     }
+    return loader->getAvailableClasses<Base>();
   }
 
   /**
@@ -293,14 +318,14 @@ private:
   /**
    * @brief Gets a handle to the class loader corresponding to a specific runtime library
    * @param library_path - the library from which we want to create the plugin
-   * @return A pointer to the ClassLoader*, == NULL if not found
+   * @return A pointer to the ClassLoader*, == nullptr if not found
    */
   ClassLoader * getClassLoaderForLibrary(const std::string & library_path);
 
   /**
    * @brief Gets a handle to the class loader corresponding to a specific class
    * @param class_name - name of class for which we want to create instance
-   * @return A pointer to the ClassLoader*, == NULL if not found
+   * @return A pointer to the ClassLoader*, == nullptr if not found
    */
   template<typename Base>
   ClassLoader * getClassLoaderForClass(const std::string & class_name)
@@ -314,7 +339,7 @@ private:
         return *i;
       }
     }
-    return NULL;
+    return nullptr;
   }
 
   /**

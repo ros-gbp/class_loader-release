@@ -41,9 +41,23 @@ bool ClassLoader::hasUnmanagedInstanceBeenCreated()
   return ClassLoader::has_unmananged_instance_been_created_;
 }
 
+std::string systemLibraryPrefix()
+{
+#ifndef _WIN32
+  return "lib";
+#endif
+  return "";
+}
+
 std::string systemLibrarySuffix()
 {
   return Poco::SharedLibrary::suffix();
+}
+
+
+std::string systemLibraryFormat(const std::string & library_name)
+{
+  return systemLibraryPrefix() + library_name + systemLibrarySuffix();
 }
 
 ClassLoader::ClassLoader(const std::string & library_path, bool ondemand_load_unload)
@@ -71,19 +85,19 @@ ClassLoader::~ClassLoader()
 
 bool ClassLoader::isLibraryLoaded()
 {
-  return class_loader::class_loader_private::isLibraryLoaded(getLibraryPath(), this);
+  return class_loader::impl::isLibraryLoaded(getLibraryPath(), this);
 }
 
 bool ClassLoader::isLibraryLoadedByAnyClassloader()
 {
-  return class_loader::class_loader_private::isLibraryLoadedByAnybody(getLibraryPath());
+  return class_loader::impl::isLibraryLoadedByAnybody(getLibraryPath());
 }
 
 void ClassLoader::loadLibrary()
 {
   boost::recursive_mutex::scoped_lock lock(load_ref_count_mutex_);
   load_ref_count_ = load_ref_count_ + 1;
-  class_loader::class_loader_private::loadLibrary(getLibraryPath(), this);
+  class_loader::impl::loadLibrary(getLibraryPath(), this);
 }
 
 int ClassLoader::unloadLibrary()
@@ -109,7 +123,7 @@ int ClassLoader::unloadLibraryInternal(bool lock_plugin_ref_count)
   } else {
     load_ref_count_ = load_ref_count_ - 1;
     if (0 == load_ref_count_) {
-      class_loader::class_loader_private::unloadLibrary(getLibraryPath(), this);
+      class_loader::impl::unloadLibrary(getLibraryPath(), this);
     } else if (load_ref_count_ < 0) {
       load_ref_count_ = 0;
     }

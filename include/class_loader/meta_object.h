@@ -32,6 +32,10 @@
 #ifndef CLASS_LOADER__META_OBJECT_H_
 #define CLASS_LOADER__META_OBJECT_H_
 
+// *INDENT-OFF* (prevent uncrustify from adding indention below)
+#warning Including header <class_loader/meta_object.h> is deprecated, \
+include <class_loader/meta_object.hpp> instead.
+
 #include "./meta_object.hpp"
 
 #endif  // CLASS_LOADER__META_OBJECT_H_
