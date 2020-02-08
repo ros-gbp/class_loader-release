@@ -1,3 +1,4 @@
+release_repo_url: git@github.com:ros-gbp/class_loader-release
 tracks:
   groovy:
     actions:
