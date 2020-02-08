@@ -31,10 +31,13 @@ else()
   message("-- catkin not found")
   set(Poco_DIR cmake)
   find_package(Poco REQUIRED COMPONENTS Foundation)
-  set(CATKIN_PACKAGE_LIB_DESTINATION lib)
   set(CATKIN_GLOBAL_BIN_DESTINATION bin)
-  set(CATKIN_GLOBAL_BIN_DESTINATION bin)
-  set(CATKIN_PACKAGE_INCLUDE_DESTINATION include/class_loader)
+  set(CATKIN_GLOBAL_LIB_DESTINATION lib)
+  set(CATKIN_GLOBAL_LIBEXEC_DESTINATION lib)
+  set(CATKIN_GLOBAL_INCLUDE_DESTINATION include)
+  set(CATKIN_PACKAGE_LIB_DESTINATION ${CATKIN_GLOBAL_LIB_DESTINATION})
+  set(CATKIN_PACKAGE_BIN_DESTINATION ${CATKIN_GLOBAL_LIBEXEC_DESTINATION}/${PROJECT_NAME})
+  set(CATKIN_PACKAGE_INCLUDE_DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/${PROJECT_NAME})
 endif()
 
 include_directories(include ${console_bridge_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${Poco_INCLUDE_DIRS})
@@ -53,7 +56,12 @@ set(${PROJECT_NAME}_HDRS
   include/class_loader/multi_library_class_loader.hpp
   include/class_loader/register_macro.hpp
 )
-add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SRCS} ${${PROJECT_NAME}_HDRS})
+if(WIN32)
+  add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SRCS} ${${PROJECT_NAME}_HDRS})
+else()
+  add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SRCS} ${${PROJECT_NAME}_HDRS})
+endif()
+
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} ${console_bridge_LIBRARIES} ${Poco_LIBRARIES})
 if(WIN32)
   # Causes the visibility macros to use dllexport rather than dllimport
